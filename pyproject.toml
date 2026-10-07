@@ -1,0 +1,33 @@
+[project]
+name = "tpch-cto"
+version = "0.1.0"
+description = "Medallion lakehouse on TPC-H, gold layer designed for the CTO / Strategist profile"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pyspark>=3.5,<4.1",
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tpch_cto"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint.per-file-ignores]
+# Databricks notebooks: `spark`, `dbutils` and `display` are injected globals, and imports
+# come after the cell that puts ../src on sys.path.
+"notebooks/*" = ["F821", "E402"]
